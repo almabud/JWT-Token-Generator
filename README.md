@@ -8,7 +8,7 @@ print(jwt_token.token)
 
 ### Decode JWT Token:
 ```
-token_decode = TokenGenerator(token=test_token.token)
+token_decode = TokenGenerator(token=jwt_token.token)
 if token_decode.is_valid():
     print(token_decode.data)
     
@@ -25,7 +25,7 @@ token_encode = TokenGenerator(data={'name': 'sample name'}, timeout='1d 5m 7s', 
 ###### Note: d = day, m = minute, s =  second. If any parameter is 0 then just skip that parameter. eg. If day = 0d then the string look like: '5m 7s'.
 ##### If you set key and algorithms for each token locally then you need to pass the key and algorithms when you decode the jwt token. Other wise token invalid exception will be raised.
 ```
-token_decode = TokenGenerator(token=test_token.token, key='secrete_key', algorithms='HS256')
+token_decode = TokenGenerator(token=token_encode.token, key='secrete_key', algorithms='HS256')
 if token_decode.is_valid():
     print(token_decode.data)
 ```
