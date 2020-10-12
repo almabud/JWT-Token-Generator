@@ -33,7 +33,7 @@ class TokenGenerator:
         if 'token' in kwargs:
             if 'data' in kwargs or 'timeout' in kwargs:
                 raise ValueError('Extra argument is given')
-            self.__token = kwargs['token']
+            self.__token = kwargs['token'].encode('UTF-8')
 
     def _set_default_config(self):
         self.__timeout = self._get_timeout(jwt_token_generator['TIMEOUT'])
@@ -44,7 +44,7 @@ class TokenGenerator:
         if not isinstance(data, dict):
             raise ValueError('data must be a dict')
         data.update({'exp': self.__timeout})
-        self.token = jwt.encode(data, self.__key, self.__algorithms)
+        self.token = jwt.encode(data, self.__key, self.__algorithms).decode()
 
     def _decode_token(self, verify):
         if not isinstance(self.__token, bytes):
