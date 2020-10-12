@@ -48,7 +48,7 @@ class TokenGenerator:
 
     def _decode_token(self, verify):
         if not isinstance(self.__token, bytes):
-            raise ValueError('token must be string')
+            raise ValueError('token must be bytes')
 
         try:
             data = jwt.decode(self.__token, self.__key, self.__algorithms, verify=verify)
