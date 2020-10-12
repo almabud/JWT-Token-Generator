@@ -51,7 +51,7 @@ class TokenGenerator:
             raise ValueError('token must be bytes')
 
         try:
-            data = jwt.decode(self.__token, self.__key, self.__algorithms, verify=verify)
+            data = jwt.decode(jwt=self.__token, key=self.__key, algorithms=self.__algorithms, verify=verify)
             self.__exp = data['exp']
             del data['exp']
             self.data = data
