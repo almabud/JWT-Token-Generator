@@ -17,11 +17,11 @@ class TokenGenerator:
     __token = None
 
     def __init__(self, **kwargs):
-        self._set_default_config()
+        self.__set_default_config()
         if not 'data' in kwargs and not 'token' in kwargs:
             raise ValueError('Missing arguments')
         if 'timeout' in kwargs:
-            self.__timeout = self._get_timeout(kwargs['timeout'])
+            self.__timeout = self.__get_timeout(kwargs['timeout'])
         if 'algorithms' in kwargs:
             self.__algorithms = kwargs['algorithms']
         if 'key' in kwargs:
@@ -29,24 +29,24 @@ class TokenGenerator:
         if 'data' in kwargs:
             if 'token' in kwargs:
                 raise ValueError('Extra argument is given')
-            self._encode_token(kwargs['data'])
+            self.__encode_token(kwargs['data'])
         if 'token' in kwargs:
             if 'data' in kwargs or 'timeout' in kwargs:
                 raise ValueError('Extra argument is given')
             self.__token = kwargs['token'].encode('UTF-8')
 
-    def _set_default_config(self):
-        self.__timeout = self._get_timeout(jwt_token_generator['TIMEOUT'])
+    def __set_default_config(self):
+        self.__timeout = self.__get_timeout(jwt_token_generator['TIMEOUT'])
         self.__key = jwt_token_generator['KEY']
         self.__algorithms = jwt_token_generator['ALGORITHMS']
 
-    def _encode_token(self, data):
+    def __encode_token(self, data):
         if not isinstance(data, dict):
             raise ValueError('data must be a dict')
         data.update({'exp': self.__timeout})
         self.token = jwt.encode(data, self.__key, self.__algorithms).decode()
 
-    def _decode_token(self, verify):
+    def __decode_token(self, verify):
         if not isinstance(self.__token, bytes):
             raise ValueError('token must be bytes')
 
@@ -66,7 +66,7 @@ class TokenGenerator:
     def is_valid(self, verify=True):
         if not self.__token:
             raise AttributeError(f'{self.__class__} has no attribute is_valid')
-        self._decode_token(verify)
+        self.__decode_token(verify)
         return True
         # try:
         #     self._decode_token()
@@ -75,7 +75,7 @@ class TokenGenerator:
         # return True
 
     @staticmethod
-    def _get_timeout(timeout):
+    def __get_timeout(timeout):
         if not isinstance(timeout, str):
             raise ValueError('timeout must be in string')
         d = m = s = 0
