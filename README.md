@@ -18,7 +18,7 @@ if token_decode.is_valid():
 {'name': 'sample name'}
 ```
 
-##### Set timeout, secret_key,  algorithms for each object:
+##### Set timeout, secret_key,  algorithms for each token:
 ```
 token_encode = TokenGenerator(data={'name': 'sample name'}, timeout='1d 5m 7s', key='secrete_key', algorithms='HS256')
 ```
